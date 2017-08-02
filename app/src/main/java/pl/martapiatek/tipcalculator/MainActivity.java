@@ -3,6 +3,7 @@ package pl.martapiatek.tipcalculator;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
 
         EditText amountEditText = (EditText) findViewById(R.id.amountEditText);
 
-       // amountEditText.addTextChangedListener(amountEditTextWatcher);
+        amountEditText.addTextChangedListener(amountEditTextWatcher);
 
         SeekBar percentSeekBar = (SeekBar) findViewById(R.id.percentSeekBar);
         percentSeekBar.setOnSeekBarChangeListener(seekBarListener);
@@ -92,6 +93,34 @@ public class MainActivity extends Activity {
     };
 
 
+    //obiekt nasłuchujący zdarzeń zmian tekstu pola EditText
+    private final TextWatcher amountEditTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            try{
+                //odczytaj kwotę rachunku i wyświetl sformatwaną wartosć jako walutę
+                billAmount = Double.parseDouble(s.toString()) / 100.0;
+                amountTextView.setText(currencyFormat.format(billAmount));
+            }
+            catch (NumberFormatException e){
+                amountTextView.setText("");
+                billAmount = 0.0;
+            }
+
+            calculate();
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
 
 }
