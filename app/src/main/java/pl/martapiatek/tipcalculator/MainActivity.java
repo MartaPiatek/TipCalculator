@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
        // amountEditText.addTextChangedListener(amountEditTextWatcher);
 
         SeekBar percentSeekBar = (SeekBar) findViewById(R.id.percentSeekBar);
-      //  percentSeekBar.setOnSeekBarChangeListener(seekBarListener);
+        percentSeekBar.setOnSeekBarChangeListener(seekBarListener);
 
 
 
@@ -68,8 +68,30 @@ public class MainActivity extends Activity {
         tipTextView.setText(currencyFormat.format(tip));
         totalTextView.setText(currencyFormat.format(total));
 
-
     }
+
+    // obiekty nasłuchujące zdarzenia zmian położenia suwaka
+    private final SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            percent = progress / 100.0;
+            calculate();
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+
 
 
 }
